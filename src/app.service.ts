@@ -4,7 +4,7 @@ import { Workflow } from './dto/workflow.dto';
 
 @Injectable()
 export class AppService {
-  private readonly worflows = [];
+  private readonly workflows = [];
   private readonly trains = [];
   private readonly IN_PROGRESS = 'in_progress';
   private readonly COMPLETED = 'completed';
@@ -15,8 +15,8 @@ export class AppService {
   }
 
   createWorkflow(workflow: Workflow) {
-    const workflow_id = this.worflows.push(workflow);
-    this.worflows[workflow_id].id = workflow_id;
+    const workflow_id = this.workflows.push(workflow);
+    this.workflows[workflow_id].id = workflow_id;
     const steps = [];
     workflow.steps.forEach((step) =>
       steps.push({ step_type: step.step_type, status: 'pending' }),
@@ -29,12 +29,12 @@ export class AppService {
   }
 
   getWorkflows() {
-    return this.worflows;
+    return this.workflows;
   }
 
   exectuteWorkflow(id: number) {
-    this.worflows[id].status = this.IN_PROGRESS;
-    this.worflows[id].steps.forEach((step) => {
+    this.workflows[id].status = this.IN_PROGRESS;
+    this.workflows[id].steps.forEach((step) => {
       step.status = this.IN_PROGRESS;
     });
     return {
@@ -44,16 +44,16 @@ export class AppService {
   }
 
   statusWorkflow(id: number) {
-    if (this.worflows[id].status === this.COMPLETED) {
+    if (this.workflows[id].status === this.COMPLETED) {
       const steps = [];
-      this.worflows[id].steps.forEach((step) => {
+      this.workflows[id].steps.forEach((step) => {
         steps.push({ step_type: step.step_type, status: step.status });
       });
       return { workflow_id: id, status: this.COMPLETED, steps };
     } else {
       const steps = [];
       let test = true;
-      this.worflows[id].steps.forEach((step) => {
+      this.workflows[id].steps.forEach((step) => {
         if (test && step.status === this.IN_PROGRESS) {
           step.status = this.COMPLETED;
           test = false;
@@ -92,7 +92,7 @@ export class AppService {
   }
 
   deleteWorkflow(id: string) {
-    delete this.worflows[Number.parseInt(id)];
+    delete this.workflows[Number.parseInt(id)];
     return {
       workflow_id: id,
       status: 'deleted',
