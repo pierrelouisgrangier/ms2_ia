@@ -1,4 +1,16 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  Delete,
+  Get,
+  Param,
+  Post,
+  UploadedFile,
+  UseInterceptors,
+} from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
+import { extname } from 'path';
 import { AppService } from './app.service';
 import { TrainIA } from './dto/train_id.dto';
 import { Workflow } from './dto/workflow.dto';
@@ -53,5 +65,26 @@ export class AppController {
   @Delete('model/:id')
   deleteModel(@Param('id') id: string) {
     return this.appService.deleteModel(id);
+  }
+
+  @Post('file')
+  @UseInterceptors(
+    FileInterceptor('file', {
+      storage: diskStorage({
+        destination: './uploads',
+        filename: async (req, file, cb) => {
+          const uniqueSuffix =
+            Date.now() + '-' + Math.round(Math.random() * 1e9);
+          const filename = `${uniqueSuffix}${extname(file.originalname)}`;
+          cb(null, filename);
+        },
+      }),
+    }),
+  )
+  uploadFile(@UploadedFile() file: Express.Multer.File) {
+    return {
+      message: 'File uploaded successfully',
+      filename: file.filename,
+    };
   }
 }
