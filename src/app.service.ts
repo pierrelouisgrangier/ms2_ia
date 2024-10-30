@@ -29,7 +29,7 @@ export class AppService {
   }
 
   getWorkflows() {
-    return this.workflows;
+    return this.workflows.filter((elem) => elem);
   }
 
   exectuteWorkflow(id: number) {
@@ -75,7 +75,7 @@ export class AppService {
   }
 
   getModels() {
-    return this.trains;
+    return this.trains.filter((elem) => elem);
   }
   trainStatus(idString: string) {
     const id = Number.parseInt(idString.split('_')[1]);
