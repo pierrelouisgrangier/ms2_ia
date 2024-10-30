@@ -4,7 +4,7 @@ import { Workflow } from './dto/workflow.dto';
 
 @Injectable()
 export class AppService {
-  private readonly workflows = [];
+  private readonly workflows = new Array<Workflow>();
   private readonly trains = [];
   private readonly IN_PROGRESS = 'in_progress';
   private readonly COMPLETED = 'completed';
@@ -16,7 +16,7 @@ export class AppService {
 
   createWorkflow(workflow: Workflow) {
     const workflow_id = this.workflows.push(workflow);
-    this.workflows[workflow_id].id = workflow_id;
+    this.workflows[workflow_id - 1].id = workflow_id;
     const steps = [];
     workflow.steps.forEach((step) =>
       steps.push({ step_type: step.step_type, status: 'pending' }),
