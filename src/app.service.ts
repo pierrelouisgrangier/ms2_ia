@@ -1,12 +1,15 @@
 import { Injectable } from '@nestjs/common';
+import { TrainIA } from './dto/train_id.dto';
 import { Workflow } from './dto/workflow.dto';
 
 @Injectable()
 export class AppService {
   private readonly worflows = [];
+  private readonly trains = [];
   private readonly IN_PROGRESS = 'in_progress';
   private readonly COMPLETED = 'completed';
   private readonly PENDING = 'pending';
+
   getHello(): string {
     return 'Hello World!';
   }
@@ -54,5 +57,46 @@ export class AppService {
       });
       return { workflow_id: id, status: this.COMPLETED, steps };
     }
+  }
+
+  trainModel(trainIA: TrainIA) {
+    const id = this.trains.push(trainIA);
+    return {
+      model_id: 'rf_' + id,
+      status: 'training_in_progress',
+      accuracy: null,
+    };
+  }
+
+  trainStatus(idString: string) {
+    const id = Number.parseInt(idString.split('_')[1]);
+    console.log(id);
+    return {
+      model_id: idString,
+      status: 'training_completed',
+      metrics: {
+        accuracy: Math.random(),
+        precision: Math.random(),
+        recall: Math.random(),
+      },
+    };
+  }
+
+  deleteWorkflow(id: string) {
+    delete this.worflows[Number.parseInt(id)];
+    return {
+      workflow_id: id,
+      status: 'deleted',
+    };
+  }
+
+  deleteModel(idString: string) {
+    const id = Number.parseInt(idString.split('_')[1]);
+    console.log(id);
+    delete this.trainModel[id];
+    return {
+      workflow_id: id,
+      status: 'deleted',
+    };
   }
 }
