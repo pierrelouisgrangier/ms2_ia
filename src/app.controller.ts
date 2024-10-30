@@ -20,4 +20,9 @@ export class AppController {
   exectuteWorkflow(@Param('id') id: string) {
     this.appService.exectuteWorkflow(Number.parseInt(id));
   }
+
+  @Post('workflow/:id/status')
+  statusWorkflow(@Param('id') id: string) {
+    this.appService.statusWorkflow(Number.parseInt(id));
+  }
 }
