@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Post } from '@nestjs/common';
 import { AppService } from './app.service';
 import { Workflow } from './dto/workflow.dto';
 
@@ -14,5 +14,10 @@ export class AppController {
   @Post('workflow')
   createWorkflow(@Body() body: Workflow) {
     this.appService.createWorkflow(body);
+  }
+
+  @Post('workflow/:id/execute')
+  exectuteWorkflow(@Param('id') id: string) {
+    this.appService.exectuteWorkflow(Number.parseInt(id));
   }
 }

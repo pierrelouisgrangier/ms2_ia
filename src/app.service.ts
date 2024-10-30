@@ -20,4 +20,11 @@ export class AppService {
       steps,
     };
   }
+
+  exectuteWorkflow(id: number) {
+    return {
+      workflow_id: id,
+      status: 'in_progress',
+    };
+  }
 }
