@@ -24,7 +24,7 @@ export class AppController {
     return this.appService.getHello();
   }
 
-  @Post('workflows')
+  @Get('workflows')
   getWorkflows() {
     return this.appService.getWorkflows();
   }
