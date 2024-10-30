@@ -26,22 +26,22 @@ export class AppController {
 
   @Post('workflows')
   getWorkflows() {
-    this.appService.getWorkflows();
+    return this.appService.getWorkflows();
   }
 
   @Post('workflow')
   createWorkflow(@Body() body: Workflow) {
-    this.appService.createWorkflow(body);
+    return this.appService.createWorkflow(body);
   }
 
   @Post('workflow/:id/execute')
   exectuteWorkflow(@Param('id') id: string) {
-    this.appService.exectuteWorkflow(Number.parseInt(id));
+    return this.appService.exectuteWorkflow(Number.parseInt(id));
   }
 
   @Post('workflow/:id/status')
   statusWorkflow(@Param('id') id: string) {
-    this.appService.statusWorkflow(Number.parseInt(id));
+    return this.appService.statusWorkflow(Number.parseInt(id));
   }
 
   @Post('model/train')
