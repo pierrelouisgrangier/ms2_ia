@@ -16,6 +16,7 @@ export class AppService {
 
   createWorkflow(workflow: Workflow) {
     const workflow_id = this.worflows.push(workflow);
+    this.worflows[workflow_id].id = workflow_id;
     const steps = [];
     workflow.steps.forEach((step) =>
       steps.push({ step_type: step.step_type, status: 'pending' }),
@@ -65,6 +66,7 @@ export class AppService {
 
   trainModel(trainIA: TrainIA) {
     const id = this.trains.push(trainIA);
+    this.trains[id].id = 'rf_' + id;
     return {
       model_id: 'rf_' + id,
       status: 'training_in_progress',
