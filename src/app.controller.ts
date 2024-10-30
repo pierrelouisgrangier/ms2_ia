@@ -24,6 +24,11 @@ export class AppController {
     return this.appService.getHello();
   }
 
+  @Post('workflows')
+  getWorkflows() {
+    this.appService.getWorkflows();
+  }
+
   @Post('workflow')
   createWorkflow(@Body() body: Workflow) {
     this.appService.createWorkflow(body);

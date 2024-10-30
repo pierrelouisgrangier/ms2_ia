@@ -27,6 +27,10 @@ export class AppService {
     };
   }
 
+  getWorkflows() {
+    return this.worflows;
+  }
+
   exectuteWorkflow(id: number) {
     this.worflows[id].status = this.IN_PROGRESS;
     this.worflows[id].steps.forEach((step) => {
