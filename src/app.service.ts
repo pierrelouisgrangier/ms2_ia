@@ -72,6 +72,9 @@ export class AppService {
     };
   }
 
+  getModels() {
+    return this.trains;
+  }
   trainStatus(idString: string) {
     const id = Number.parseInt(idString.split('_')[1]);
     console.log(id);

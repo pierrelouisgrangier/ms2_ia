@@ -54,6 +54,11 @@ export class AppController {
     return this.appService.trainStatus(id);
   }
 
+  @Get('models')
+  getModels() {
+    return this.appService.getModels();
+  }
+
   @Post('model/:id/predict')
   prediction(@Param('id') id: string) {
     console.log(id);
